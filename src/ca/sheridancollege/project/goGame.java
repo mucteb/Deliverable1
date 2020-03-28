@@ -70,14 +70,14 @@ public class goGame extends Game
                 nextPlayer = players.get(nextPlayerNumber);
 
                 //Get current player card  
-                System.out.print("\n" + currentPlayer.getPlayerID() 
-                                 + "'s cards are: " + 
-                                 currentPlayer.getListCards());
+                System.out.print("\n" + currentPlayer.getPlayerID()
+                        + "'s cards are: "
+                        + currentPlayer.getListCards());
 
                 int choisen = getPlayerCard(
-                                currentPlayer.getPlayerID(), 
-                                1, 
-                                currentPlayer.getCardSize());
+                        currentPlayer.getPlayerID(),
+                        1,
+                        currentPlayer.getCardSize());
 
                 if (choisen == 100)
                 {
@@ -90,66 +90,77 @@ public class goGame extends Game
                 goCard choisedCard = currentPlayer.getPlayCards().get(choisen);
 
 //          Card choisedCard = currentPlayer.getPlayCards().get(0);
-                System.out.println("\n" + currentPlayer.getPlayerID() 
-                                 + " choised card is: " 
-                                 + choisedCard.toString());
+                System.out.println("\n" + currentPlayer.getPlayerID()
+                        + " choised card is: "
+                        + choisedCard.toString());
 
                 int activeCardNumber = 0;
 
                 boolean cardFound = false;
+                currentPlayer.setRight(false);
+                ArrayList<goCard> RemoveList = new ArrayList<>();
 
                 for (goCard nextPlayerCard : nextPlayer.playCards)
                 {
                     //if next player has same value as current player  
-                   if (nextPlayerCard.getValue().equals(
-                                            choisedCard.getValue()))
+                    if (nextPlayerCard.getValue().equals(
+                            choisedCard.getValue()))
                     {
                         cardFound = true;
-                        System.out.println("Card value found in " 
-                                      + nextPlayer.getPlayerID() 
-                                      + "'s deck " 
-                                      + nextPlayerCard.toString());
-                        
-                        System.out.println(nextPlayerCard.toString() 
-                                      + " removed from " 
-                                      + nextPlayer.getPlayerID());
-                        
-                        System.out.println("New card added to " 
-                                      + currentPlayer.getPlayerID() 
-                                      + " " + nextPlayerCard.toString());
-                        
+                        System.out.println("Card value found in "
+                                + nextPlayer.getPlayerID()
+                                + "'s deck "
+                                + nextPlayerCard.toString());
+
+                        System.out.println(nextPlayerCard.toString()
+                                + " removed from "
+                                + nextPlayer.getPlayerID());
+
+                        System.out.println("New card added to "
+                                + currentPlayer.getPlayerID()
+                                + " " + nextPlayerCard.toString());
+
                         currentPlayer.getPlayCards().add(nextPlayerCard);
-                        
-                        nextPlayer.playCards.remove(
-                                  nextPlayer.playCards.indexOf(nextPlayerCard));
 
-                        System.out.println(currentPlayer.getPlayerID() 
-                                          + "'s new card count is: " 
-                                          + currentPlayer.playCards.size());
-                        
-                        System.out.println(nextPlayer.getPlayerID() 
-                                          + "'s new card count is: " 
-                                          + nextPlayer.playCards.size());
+//                      nextPlayer.playCards.remove(
+//                                  nextPlayer.playCards.indexOf(nextPlayerCard));
+                        RemoveList.add(nextPlayerCard);
 
-                        System.out.println(currentPlayer.getPlayerID() 
-                                          + " earned one more time");
-                        currentPlayer.setRight(true);
-                        break;
-                    } else
-                    {
-                        currentPlayer.setRight(false);
-                    }
-                }
+                        System.out.println(currentPlayer.getPlayerID()
+                                + "'s new card count is: "
+                                + currentPlayer.playCards.size());
 
-                if (!cardFound)
+
+                        //      break;
+                    } //if
+
+                }//for
+
+                if (cardFound)
                 {
-                    System.out.println("\n"+nextPlayer.getPlayerID() 
-                                               + ":!!!Go Fish!!!"+"\n");
+                    nextPlayer.playCards.removeAll(RemoveList);
+                    
+                    System.out.println(nextPlayer.getPlayerID()
+                                + "'s new card count is: "
+                                + nextPlayer.playCards.size());
+                    
+                    
+                    
+                    System.out.println(currentPlayer.getPlayerID()
+                            + " earned one more time");
+
+                    currentPlayer.setRight(true);
+                } 
+                else if (!cardFound)
+                {
+                    currentPlayer.setRight(false);
+                    System.out.println("\n" + nextPlayer.getPlayerID()
+                            + ":!!!Go Fish!!!" + "\n");
 
                     if (deck.size() != 0)
                     {
                         goCard getCard = deck.getNewCard();
-                        System.out.println("Returned Card is: "
+                        System.out.println("Returned Card from deck is: "
                                 + getCard.toString());
 
                         System.out.println(getCard.toString() + " added to "
@@ -164,7 +175,9 @@ public class goGame extends Game
                         currentPlayer.setRight(false);
 
                     } else
+                    {
                         gameOver = true;
+                    }
 
                 }
 
@@ -197,49 +210,50 @@ public class goGame extends Game
             try
             {
                 Scanner k = new Scanner(System.in);
-                System.out.print("\n" + name 
-                            + ", please choice a card (between 1-" 
-                            + max 
-                            + ") 'q' for exit :");
+                System.out.print("\n" + name
+                        + ", please choice a card (between 1-"
+                        + max
+                        + ") 'q' for exit :");
 
                 String value = k.nextLine();
-                
-                if (value.equals("q"))
-                    return 100;
-                else 
-                    intVal = Integer.parseInt(value);
 
-                 isnumeric = true;
-                
-                
+                if (value.equals("q"))
+                {
+                    return 100;
+                } else
+                {
+                    intVal = Integer.parseInt(value);
+                }
+
+                isnumeric = true;
+
             } catch (Exception e)
             {
                 isnumeric = false;
             }
 
-            if ((intVal >=min) && (intVal <= max) && (isnumeric))
+            if ((intVal >= min) && (intVal <= max) && (isnumeric))
             {
                 check = true;
-            }
-            else
+            } else
+            {
                 System.out.println("!!!Please enter a valid value!!!");
-
+            }
 
         }
-        return intVal-1;
+        return intVal - 1;
     }
 
     public int getPlayerCount()
     {
-        int intVal=0;
-        final int MIN=1;
-        final int MAX=7;
-        
-        
+        int intVal = 0;
+        final int MIN = 1;
+        final int MAX = 7;
+
         Scanner k = new Scanner(System.in);
-        System.out.print("Please enter players count (min="+(MIN+1)
-                                                    +" max="+(MAX+1)
-                                                    +") 'q' for exit : ");
+        System.out.print("Please enter how many players want to play (min=" + (MIN + 1)
+                + " max=" + (MAX)
+                + ") 'q' for exit : ");
 
         //check entered value
         boolean isnumeric = true;
@@ -271,8 +285,8 @@ public class goGame extends Game
         for (int i = 0; i < pCount; i++)
         {
             int currentPlayerNumber = i + 1;
-            System.out.print("\n Please enter player-" 
-                           + currentPlayerNumber + " name: ");
+            System.out.print("\n Please enter player-"
+                    + currentPlayerNumber + " name: ");
             String name = "";
 
             try
@@ -308,12 +322,11 @@ public class goGame extends Game
         System.out.println("_____________________________________________________");
         System.out.println("Summary");
         System.out.println("_____________________________________________________");
-        
-        
+
         for (goPlayer i : players)
         {
             i.checkSerial();
-            System.out.println(i.getPlayerID() + "'s cards are: "
+            System.out.println("\n" + i.getPlayerID() + "'s cards are: "
                     + i.getListCards());
             System.out.println(i.getPlayerID() + "'s cards count is: "
                     + i.getCardSize()
@@ -322,10 +335,13 @@ public class goGame extends Game
 
         Collections.sort(players);
         System.out.println("_____________________________________________________");
-        if (players.get(0).getScor()>0)
-           System.out.println("\nWinner is: " + players.get(0).getPlayerID());
-        else
-           System.out.println("I'm sorry this game finished scorless");    
+        if (players.get(0).getScor() > 0)
+        {
+            System.out.println("\nWinner is: " + players.get(0).getPlayerID());
+        } else
+        {
+            System.out.println("I'm sorry this game finished scorless");
+        }
         System.out.println("_____________________________________________________");
 
     }
