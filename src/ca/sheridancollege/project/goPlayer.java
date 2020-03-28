@@ -9,7 +9,7 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
 
     protected String name;
     protected ArrayList<goCard> playCards;
-    protected int wincount;
+    protected int scor;
     protected boolean Right;
 
 
@@ -23,14 +23,14 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
         this.Right = playerRight;
     }
 
-    public int getWincount()
+    public int getScor()
     {
-        return wincount;
+        return scor;
     }
 
-    public void setWincount(int wincount)
+    public void setScor(int scor)
     {
-        this.wincount += wincount;
+        this.scor += scor;
     }
 
     public goPlayer(String name, ArrayList<goCard> pCards)
@@ -58,7 +58,8 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     public StringBuilder getListCards()
     {
         StringBuilder list = new StringBuilder("");
-
+        Integer i = 0;        
+        
         playCards.forEach((Card item) ->
         {
             list.append(item.toString());
@@ -80,7 +81,7 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
                     serial.add(nextCard);
                     if (serial.size() == 4)
                     {
-                        setWincount(1);
+                        setScor(1);
                     }
                 }
             }
@@ -97,6 +98,6 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     @Override
     public int compareTo(goPlayer o)
     {
-        return o.getWincount() - this.getWincount();
+        return o.getScor() - this.getScor();
     }
 }

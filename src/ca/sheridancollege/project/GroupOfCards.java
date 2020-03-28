@@ -26,12 +26,39 @@ public class GroupOfCards
     public GroupOfCards(int givenSize)
     {
         size = givenSize;
+        
+        
     }
     
-    /**
-     * A method that will get the group of cards as an ArrayList
-     * @return the group of cards.
-     */
+    public GroupOfCards(int givenSize, goDeck newCards)
+    {
+         size = givenSize;
+      
+        Collections.shuffle(newCards.getAllCards());
+        
+        
+        cards  = new ArrayList<goCard>();
+
+        
+        
+        for (int i = 0; i < givenSize; i++)
+        {
+            cards.add(newCards.getNewCard());
+        }
+
+
+        
+        shuffle();
+        
+
+        for (goCard num : cards)
+        {
+            System.out.print(num.toString() + ", ");
+        }
+        
+    }        
+    
+    
     public ArrayList<goCard> showCards()
     {
         return cards;

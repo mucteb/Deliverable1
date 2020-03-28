@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class Cards {
+public class goDeck {
     
     private ArrayList<goCard> allCards; 
 
@@ -19,7 +19,7 @@ public class Cards {
         this.allCards = allCards;
     }
     
-    public Cards()
+    public goDeck()
     {
       allCards = new ArrayList<goCard>();   
       String [] symbols={"H","C","S","D"};
