@@ -7,21 +7,21 @@ import java.util.Collections;
 
 public class Cards {
     
-    private ArrayList<Card> allCards; 
+    private ArrayList<goCard> allCards; 
 
-    public ArrayList<Card> getAllCards()
+    public ArrayList<goCard> getAllCards()
     {
         return allCards;
     }
 
-    public void setAllCards(ArrayList<Card> allCards)
+    public void setAllCards(ArrayList<goCard> allCards)
     {
         this.allCards = allCards;
     }
     
     public Cards()
     {
-      allCards = new ArrayList<Card>();   
+      allCards = new ArrayList<goCard>();   
       String [] symbols={"H","C","S","D"};
       String [] asymbols={"J","Q","K"};
       String value;  
@@ -71,9 +71,9 @@ public class Cards {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public Card getNewCard()
+    public goCard getNewCard()
     {
-        Card nextCard=allCards.get(0);
+        goCard nextCard=allCards.get(0);
        // System.out.println(nextCard.toString() + " removed from deck");        
         allCards.remove(0);
         return nextCard;

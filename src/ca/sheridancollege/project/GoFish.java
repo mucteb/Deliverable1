@@ -1,24 +1,14 @@
-
 package ca.sheridancollege.project;
 
 
-public class GoFish extends Game {
+public class GoFish
+{
 
-    public GoFish(String givenName)
+    public static void main(String[] args)
     {
-        super("GoFish");
-    }
-
-    @Override
-    public void play()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void declareWinner()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+       goGame game = new goGame("GoFish"); 
+       game.play();
+       game.declareWinner();
+    }//main method end
 
 }
