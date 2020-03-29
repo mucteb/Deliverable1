@@ -1,8 +1,6 @@
-
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
-
 
 public final class goPlayer extends Player implements Comparable<goPlayer>
 {
@@ -11,7 +9,6 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     protected ArrayList<goCard> playCards;
     protected int scor;
     protected boolean Right;
-
 
     public boolean hasRight()
     {
@@ -58,8 +55,8 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     public StringBuilder getListCards()
     {
         StringBuilder list = new StringBuilder("");
-        Integer i = 0;        
-        
+        Integer i = 0;
+
         playCards.forEach((Card item) ->
         {
             list.append(item.toString());
@@ -70,24 +67,44 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
 
     public void checkSerial()
     {
+        ArrayList<Card> serial = new ArrayList<>();
         for (goCard PlayerCard : getPlayCards())
         {
-            ArrayList<Card> serial = new ArrayList<>();
-
+            serial.clear();
             for (goCard nextCard : getPlayCards())
             {
                 if (PlayerCard.getValue().equals(nextCard.getValue()))
                 {
-                    serial.add(nextCard);
-                    if (serial.size() == 4)
+
+                    if ((serial.indexOf(nextCard) == -1))
                     {
-                        setScor(1);
+                        serial.add(nextCard);
                     }
                 }
             }
         }
-    }
 
+        if ((serial.size() > 0) && (serial.size() % 4 == 0))
+        {
+            System.out.println("\n" + getPlayerID()
+                    + " completed the serial.");
+            for (Card i : serial)
+                System.out.print(i.toString() + ", ");
+
+            float mscor = (serial.size() / 4);
+
+            setScor((int) mscor);
+
+            System.out.println("removed from " + getPlayerID() + "'s deck");
+            System.out.println(getPlayerID() + " earned " + (int) mscor + " point");
+            System.out.println(getPlayerID() + " card count is: " + getCardSize());
+            System.out.println(getPlayerID() + " new scor is: " + getScor());
+
+            getPlayCards().removeAll(serial);
+            
+        }
+
+    }
 
     @Override
     public void play()

@@ -44,6 +44,8 @@ public class goGame extends Game
                 check = true;
                 players.addAll(getPlayerNames(pCount));
             }
+            
+            
         } while (!check);
 
         if (check)
@@ -54,6 +56,8 @@ public class goGame extends Game
 
             goPlayer currentPlayer = players.get(activePlayerNumber);
             goPlayer nextPlayer = players.get(nextPlayerNumber);
+            
+            currentPlayer.checkSerial();
 
             do
             {
@@ -130,6 +134,7 @@ public class goGame extends Game
                                 + "'s new card count is: "
                                 + currentPlayer.playCards.size());
 
+                        
 
                         //      break;
                     } //if
@@ -148,6 +153,10 @@ public class goGame extends Game
                     
                     System.out.println(currentPlayer.getPlayerID()
                             + " earned one more time");
+
+                    System.out.println("Deck card count is: "
+                                + deck.size());
+                    
 
                     currentPlayer.setRight(true);
                 } 
@@ -178,9 +187,11 @@ public class goGame extends Game
                     {
                         gameOver = true;
                     }
-
+                
                 }
 
+                currentPlayer.checkSerial();
+                
                 if (currentPlayer.getCardSize() == 0)
                 {
                     if (deck.size() != 0)
@@ -325,23 +336,48 @@ public class goGame extends Game
 
         for (goPlayer i : players)
         {
-            i.checkSerial();
             System.out.println("\n" + i.getPlayerID() + "'s cards are: "
                     + i.getListCards());
+
             System.out.println(i.getPlayerID() + "'s cards count is: "
                     + i.getCardSize()
-                    + " scor is: " + (int) i.getScor() / 4);
+                    + " scor is: " + i.getScor());
         }
 
         Collections.sort(players);
+        
         System.out.println("_____________________________________________________");
-        if (players.get(0).getScor() > 0)
-        {
-            System.out.println("\nWinner is: " + players.get(0).getPlayerID());
-        } else
-        {
+
+        ArrayList<goPlayer> winners = new ArrayList<>();
+        
+         if (players.get(0).getScor() > 0)
+           {     
+//            if(players.get(0).getScor() == players.get(1).getScor())
+//            System.out.println("\nWinner is: " + players.get(0).getPlayerID());
+            for (int i=0; i < players.size()-1; i++)
+            {
+                if (players.get(i).getScor()==players.get(i+1).getScor())
+                {
+                   if (winners.indexOf(players.get(i)) == -1)
+                       winners.add(players.get(i));
+                   if (winners.indexOf(players.get(i+1)) == -1)
+                       winners.add(players.get(i+1));
+                }    
+            }
+            
+            if (winners.size()>0)
+            {
+                System.out.println("Winners are: ");
+               for (goPlayer i:winners)
+                System.out.print(i.getPlayerID()+", ");
+                  
+            }     
+            else
+                System.out.println("Champion is : "+players.get(0).getPlayerID()); 
+           }   
+           else
             System.out.println("I'm sorry this game finished scorless");
-        }
+        
         System.out.println("_____________________________________________________");
 
     }
