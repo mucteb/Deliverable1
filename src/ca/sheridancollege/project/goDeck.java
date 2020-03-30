@@ -68,7 +68,17 @@ public class goDeck {
     @Override
     public String toString()
     {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder cardList=new StringBuilder();
+        
+        for(goCard i:getAllCards())
+        {
+            cardList.append(i.toString());
+            cardList.append(", ");
+        }
+        
+        return cardList.toString();
+        //@modifier Muharrem, 2020
+        //return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
     
     public goCard getNewCard()
@@ -78,6 +88,8 @@ public class goDeck {
         allCards.remove(0);
         return nextCard;
     }
+    
+    
 
 
 }

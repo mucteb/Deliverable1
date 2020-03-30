@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public abstract class Game 
 {
     private final String gameName;//the title of the game
+    
+  //ArrayList <Player> players; @modifier Muharrem, 2020
     ArrayList <goPlayer> players;// the players of the game
     
     public Game(String givenName)

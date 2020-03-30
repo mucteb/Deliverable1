@@ -5,41 +5,52 @@ import java.util.ArrayList;
 public final class goPlayer extends Player implements Comparable<goPlayer>
 {
 
-    protected String name;
-    protected ArrayList<goCard> playCards;
-    protected int scor;
-    protected boolean Right;
+    private ArrayList<goCard> playCards;
+    private int score;
+    private boolean right;
+    private int type;
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
+    }
 
     public boolean hasRight()
     {
-        return Right;
+        return right;
     }
 
     public void setRight(boolean playerRight)
     {
-        this.Right = playerRight;
+        this.right = playerRight;
     }
 
-    public int getScor()
+    public int getScore()
     {
-        return scor;
+        return score;
     }
 
-    public void setScor(int scor)
+    public void setScore(int scor)
     {
-        this.scor += scor;
+        this.score += scor;
     }
 
-    public goPlayer(String name, ArrayList<goCard> pCards)
+    public goPlayer(String name, ArrayList<goCard> pCards, int type)
     {
         super(name);
         setPlayCards(pCards);
         setRight(true);
+        setType(type);
     }
 
     public int getCardSize()
     {
-        return playCards.size();
+        return getPlayCards().size();
     }
 
     public ArrayList<goCard> getPlayCards()
@@ -52,17 +63,17 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
         this.playCards = playCards;
     }
 
-    public StringBuilder getListCards()
+    public String getCardsList()
     {
         StringBuilder list = new StringBuilder("");
         Integer i = 0;
 
-        playCards.forEach((Card item) ->
+        getPlayCards().forEach((Card item) ->
         {
             list.append(item.toString());
         });
-
-        return list;
+        
+        return list.toString();
     }
 
     public void checkSerial()
@@ -74,13 +85,8 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
             for (goCard nextCard : getPlayCards())
             {
                 if (PlayerCard.getValue().equals(nextCard.getValue()))
-                {
-
                     if ((serial.indexOf(nextCard) == -1))
-                    {
                         serial.add(nextCard);
-                    }
-                }
             }
         }
 
@@ -93,12 +99,12 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
 
             float mscor = (serial.size() / 4);
 
-            setScor((int) mscor);
+            setScore((int) mscor);
 
             System.out.println("removed from " + getPlayerID() + "'s deck");
             System.out.println(getPlayerID() + " earned " + (int) mscor + " point");
-            System.out.println(getPlayerID() + " card count is: " + getCardSize());
-            System.out.println(getPlayerID() + " new scor is: " + getScor());
+            System.out.println(getPlayerID() + "'s card count is: " + getCardSize());
+            System.out.println(getPlayerID() + "'s new score is: " + getScore());
 
             getPlayCards().removeAll(serial);
             
@@ -109,12 +115,21 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     @Override
     public void play()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       //@modifier Muharrem KAYA 
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public int compareTo(goPlayer o)
     {
-        return o.getScor() - this.getScor();
+        return o.getScore() - this.getScore();
     }
+
+    public boolean equals(Object obj)
+    {
+        return this == obj;
+    }
+    
+    
+    
+    
 }

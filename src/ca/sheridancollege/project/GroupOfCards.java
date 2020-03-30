@@ -20,14 +20,14 @@ public class GroupOfCards
 {
    
     //The group of cards, stored in an ArrayList
+    //@modifier Muharrem, 2020
+    //private ArrayList <Card> cards; 
     private ArrayList <goCard> cards;
     private int size;//the size of the grouping
     
     public GroupOfCards(int givenSize)
     {
         size = givenSize;
-        
-        
     }
     
     public GroupOfCards(int givenSize, goDeck newCards)
@@ -39,22 +39,13 @@ public class GroupOfCards
         
         cards  = new ArrayList<goCard>();
 
-        
-        
         for (int i = 0; i < givenSize; i++)
-        {
             cards.add(newCards.getNewCard());
-        }
 
-
-        
         shuffle();
-        
 
         for (goCard num : cards)
-        {
             System.out.print(num.toString() + ", ");
-        }
         
     }        
     
