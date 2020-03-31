@@ -7,11 +7,11 @@ import java.util.Scanner;
 public class goGame extends Game
 {
 
-    private goDeck deck;
-    private int cCount;
-    private String spCount;
-    private int pCount;
-    private boolean gameOver;
+    goDeck deck;
+    int cCount;
+    String spCount;
+    int pCount;
+    boolean gameOver;
 
     public goGame(String name)
     {
@@ -44,7 +44,8 @@ public class goGame extends Game
                 check = true;
                 players.addAll(getPlayerNames(pCount));
             }
-
+            
+            
         } while (!check);
 
         if (check)
@@ -55,7 +56,7 @@ public class goGame extends Game
 
             goPlayer currentPlayer = players.get(activePlayerNumber);
             goPlayer nextPlayer = players.get(nextPlayerNumber);
-
+            
             currentPlayer.checkSerial();
 
             do
@@ -64,16 +65,18 @@ public class goGame extends Game
                 {
                     //activePlayerNumber++;
                     //activePlayerNumber=getNextPlayer(currentPlayer);
-                    activePlayerNumber = players.indexOf(nextPlayer);
-
+                    activePlayerNumber=players.indexOf(nextPlayer);
+                    
                 }
 
-                //  activePlayerNumber = activePlayerNumber % pCount;
-                //  nextPlayerNumber = (activePlayerNumber + 1) % pCount;
+              //  activePlayerNumber = activePlayerNumber % pCount;
+              //  nextPlayerNumber = (activePlayerNumber + 1) % pCount;
+
                 //Set Current and Next Player     
                 currentPlayer = players.get(activePlayerNumber);
-                // nextPlayer = players.get(nextPlayerNumber);
-                nextPlayer = players.get(getNextPlayer(currentPlayer));
+               // nextPlayer = players.get(nextPlayerNumber);
+                nextPlayer = players.get(getNextPlayer(currentPlayer));   
+               
 
                 //Get current player card  
                 System.out.print("\n" + currentPlayer.getPlayerID()
@@ -106,7 +109,7 @@ public class goGame extends Game
                 currentPlayer.setRight(false);
                 ArrayList<goCard> RemoveList = new ArrayList<>();
 
-                for (goCard nextPlayerCard : nextPlayer.getPlayCards())
+                for (goCard nextPlayerCard : nextPlayer.playCards)
                 {
                     //if next player has same value as current player  
                     if (nextPlayerCard.getValue().equals(
@@ -128,11 +131,15 @@ public class goGame extends Game
 
                         currentPlayer.getPlayCards().add(nextPlayerCard);
 
+//                      nextPlayer.playCards.remove(
+//                                  nextPlayer.playCards.indexOf(nextPlayerCard));
                         RemoveList.add(nextPlayerCard);
 
                         System.out.println(currentPlayer.getPlayerID()
                                 + "'s new card count is: "
-                                + currentPlayer.getPlayCards().size());
+                                + currentPlayer.playCards.size());
+
+                        
 
                         //      break;
                     } //if
@@ -141,20 +148,23 @@ public class goGame extends Game
 
                 if (cardFound)
                 {
-                    nextPlayer.getPlayCards().removeAll(RemoveList);
-
+                    nextPlayer.playCards.removeAll(RemoveList);
+                    
                     System.out.println(nextPlayer.getPlayerID()
-                            + "'s new card count is: "
-                            + nextPlayer.getPlayCards().size());
-
+                                + "'s new card count is: "
+                                + nextPlayer.playCards.size());
+                    
+         
                     System.out.println(currentPlayer.getPlayerID()
                             + " earned one more time");
 
                     System.out.println("Deck card count is: "
-                            + deck.size());
+                                + deck.size());
+                    
 
                     currentPlayer.setRight(true);
-                } else if (!cardFound)
+                } 
+                else if (!cardFound)
                 {
                     currentPlayer.setRight(false);
                     System.out.println("\n" + nextPlayer.getPlayerID()
@@ -172,7 +182,7 @@ public class goGame extends Game
 
                         System.out.println(currentPlayer.getPlayerID()
                                 + "'s new card count is: "
-                                + currentPlayer.getPlayCards().size());
+                                + currentPlayer.playCards.size());
                         System.out.println("Rest of cards in the deck: "
                                 + deck.size());
                         currentPlayer.setRight(false);
@@ -181,11 +191,11 @@ public class goGame extends Game
                     {
                         gameOver = true;
                     }
-
-                }//do while end
+                
+                }
 
                 currentPlayer.checkSerial();
-
+                
                 if (currentPlayer.getCardSize() == 0)
                 {
                     if (deck.size() != 0)
@@ -204,7 +214,7 @@ public class goGame extends Game
         }
     }
 
-    private int getPlayerCard(String name, int min, int max)
+    public int getPlayerCard(String name, int min, int max)
     {
         boolean check = false;
         boolean isnumeric;
@@ -222,7 +232,7 @@ public class goGame extends Game
 
                 String value = k.nextLine();
 
-                if (value.equals("q")) //@modifier Muharrem, 100 exit value
+                if (value.equals("q"))
                 {
                     return 100;
                 } else
@@ -249,14 +259,14 @@ public class goGame extends Game
         return intVal - 1;
     }
 
-    private int getPlayerCount()
+    public int getPlayerCount()
     {
         int intVal = 0;
-        final int MIN = 1;
+        final int MIN = 2;
         final int MAX = 6;
 
         Scanner k = new Scanner(System.in);
-        System.out.print("Please enter how many players want to play (min=" + (MIN + 1)
+        System.out.print("Please enter how many players want to play (min=" + (MIN)
                 + " max=" + (MAX)
                 + ") 'q' for exit : ");
 
@@ -276,14 +286,14 @@ public class goGame extends Game
             isnumeric = false;
         }
 
-        if (!((intVal > MIN) && (intVal <= MAX) && (isnumeric)))
+        if (!((intVal >= MIN) && (intVal <= MAX) && (isnumeric)))
         {
             return 1;
         }
         return intVal;
     }
 
-    private ArrayList<goPlayer> getPlayerNames(int pCount)
+    public ArrayList<goPlayer> getPlayerNames(int pCount)
     {
         ArrayList<goPlayer> tempList = new ArrayList<>();
 
@@ -313,7 +323,7 @@ public class goGame extends Game
             }
 
             GroupOfCards pcards = new GroupOfCards(cCount, deck);
-            tempList.add(new goPlayer(name, pcards.showCards(), 1));
+            tempList.add(new goPlayer(name, pcards.showCards()));
 
         }
         return tempList;
@@ -335,94 +345,82 @@ public class goGame extends Game
 
             System.out.println(i.getPlayerID() + "'s cards count is: "
                     + i.getCardSize()
-                    + " score is: " + i.getScore());
+                    + " scor is: " + i.getScore());
         }
 
         Collections.sort(players);
-
+        
         System.out.println("_____________________________________________________");
 
         ArrayList<goPlayer> winners = new ArrayList<>();
-
-        if (players.get(0).getScore() > 0)
-        {
+        
+         if (players.get(0).getScore() > 0)
+           {     
 //            if(players.get(0).getScor() == players.get(1).getScor())
 //            System.out.println("\nWinner is: " + players.get(0).getPlayerID());
-            for (int i = 0; i < players.size() - 1; i++)
+            for (int i=0; i < players.size()-1; i++)
             {
-                if (players.get(i).getScore() == players.get(i + 1).getScore())
+                if (players.get(i).getScore()==players.get(i+1).getScore())
                 {
-                    if (winners.indexOf(players.get(i)) == -1)
-                    {
-                        winners.add(players.get(i));
-                    }
-                    if (winners.indexOf(players.get(i + 1)) == -1)
-                    {
-                        winners.add(players.get(i + 1));
-                    }
-                }
+                   if (winners.indexOf(players.get(i)) == -1)
+                       winners.add(players.get(i));
+                   if (winners.indexOf(players.get(i+1)) == -1)
+                       winners.add(players.get(i+1));
+                }    
             }
-
-            if (winners.size() > 0)
+            
+            
+            if (winners.get(0).getScore()>players.get(0).getScore())
             {
-                if (winners.get(0).getScore() > players.get(0).getScore())
-                {
-                    System.out.println("Winners are: ");
-                    for (goPlayer i : winners)
-                    {
-                        System.out.print(i.getPlayerID() + ", ");
-                    }
-                    System.out.println("");
-                }
-            } else
-            {
-                System.out.println("Champion is : " + players.get(0).getPlayerID());
-            }
-        } else
-        {
+                System.out.println("Winners are: ");
+               for (goPlayer i:winners)
+                System.out.print(i.getPlayerID()+", ");
+                System.out.println("");  
+            }     
+            else
+                System.out.println("Champion is : "+players.get(0).getPlayerID()); 
+           }   
+           else
             System.out.println("I'm sorry this game finished scorless");
-        }
-
+        
         System.out.println("_____________________________________________________");
 
     }
-
+    
     private int getNextPlayer(goPlayer ignoredPlayer)
     {
-        boolean check = false;
-        int intVal = 0;
+        boolean check=false;
+        int intVal=0;
         ArrayList<goPlayer> competitors = new ArrayList<>();
-
-        while (!check)
+        
+        while(!check)
         {
-
-            System.out.print("\n\n");
-
-            competitors.clear();
-            for (int i = 0; i < players.size(); i++)
-            {
-                if (!players.get(i).equals(ignoredPlayer))
-                {
-                    System.out.print(" (" + i + ")-" + players.get(i).getPlayerID());
-                    competitors.add(players.get(i));
-                }
-            }
+    
+        System.out.print("\n\n");
+        
+        competitors.clear();
+         for (int i = 0; i<players.size(); i++)
+             if (!players.get(i).equals(ignoredPlayer) )
+             {      
+                System.out.print(" ("+i+")-"+players.get(i).getPlayerID());
+                competitors.add(players.get(i));
+             }   
 
             try
             {
                 Scanner k = new Scanner(System.in);
-                System.out.print("\n" + ignoredPlayer.getPlayerID() + ", please choice a competitor: ");
+                System.out.print("\n"+ignoredPlayer.getPlayerID()+", please choice a competitor: ");
                 String value = k.nextLine();
-
+                
                 intVal = Integer.parseInt(value);
 
             } catch (Exception e)
             {
-
+                
             }
-
-            if ((players.size() >= intVal)
-                    && (competitors.indexOf(players.get(intVal)) != -1))
+            
+            if ((players.size()>intVal) && 
+                    (competitors.indexOf(players.get(intVal)) != -1 ))
             {
                 check = true;
             } else
@@ -431,10 +429,12 @@ public class goGame extends Game
             }
 
         }
-        System.out.println(ignoredPlayer.getPlayerID() + " choised "
-                + players.get(intVal).getPlayerID() + " as a competitior");
+        System.out.println(ignoredPlayer.getPlayerID()+" choised "+
+                                 players.get(intVal). getPlayerID()+" as a competitior" );
         return intVal;
-    }
+    }        
+    
+    
 
 }//class end
 
