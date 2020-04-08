@@ -29,6 +29,9 @@ public class goGame extends Game
 
         do
         {
+            
+         //GetHow many players    
+            
             pCount = getPlayerCount();
 
             if (pCount == 1)
@@ -51,34 +54,35 @@ public class goGame extends Game
         if (check)
         {
             //Game Starting
+            //set first active player and next player
             int activePlayerNumber = 0;
             int nextPlayerNumber = 1;
 
             goPlayer currentPlayer = players.get(activePlayerNumber);
             goPlayer nextPlayer = players.get(nextPlayerNumber);
             
+            
+            //check any serial cards in the current player hand
             currentPlayer.checkSerial();
+             //if any serial completed by the current player, the player get 1 point
 
+            
+            //set new current player and next player
             do
             {
                 if (!currentPlayer.hasRight())
                 {
-                    //activePlayerNumber++;
-                    //activePlayerNumber=getNextPlayer(currentPlayer);
+                    //set previous next player as a current player
                     activePlayerNumber=players.indexOf(nextPlayer);
                     
                 }
 
-              //  activePlayerNumber = activePlayerNumber % pCount;
-              //  nextPlayerNumber = (activePlayerNumber + 1) % pCount;
 
-                //Set Current and Next Player     
                 currentPlayer = players.get(activePlayerNumber);
-               // nextPlayer = players.get(nextPlayerNumber);
                 nextPlayer = players.get(getNextPlayer(currentPlayer));   
                
 
-                //Get current player card  
+                //Get cards for current player card  
                 System.out.print("\n" + currentPlayer.getPlayerID()
                         + "'s cards are: "
                         + currentPlayer.getCardsList());
@@ -88,6 +92,8 @@ public class goGame extends Game
                         1,
                         currentPlayer.getCardSize());
 
+                
+                //exit code 100 -program terminated
                 if (choisen == 100)
                 {
                     System.out.println("---Game is terminated by user---");
@@ -95,10 +101,10 @@ public class goGame extends Game
                 }
 
 //
-                //Show choisen Card  
+                //Show players hand
                 goCard choisedCard = currentPlayer.getPlayCards().get(choisen);
 
-//          Card choisedCard = currentPlayer.getPlayCards().get(0);
+
                 System.out.println("\n" + currentPlayer.getPlayerID()
                         + " choised card is: "
                         + choisedCard.toString());
@@ -109,6 +115,8 @@ public class goGame extends Game
                 currentPlayer.setRight(false);
                 ArrayList<goCard> RemoveList = new ArrayList<>();
 
+                
+                //compare current players Cards with next player Cards
                 for (goCard nextPlayerCard : nextPlayer.playCards)
                 {
                     //if next player has same value as current player  
@@ -131,8 +139,6 @@ public class goGame extends Game
 
                         currentPlayer.getPlayCards().add(nextPlayerCard);
 
-//                      nextPlayer.playCards.remove(
-//                                  nextPlayer.playCards.indexOf(nextPlayerCard));
                         RemoveList.add(nextPlayerCard);
 
                         System.out.println(currentPlayer.getPlayerID()
@@ -146,6 +152,7 @@ public class goGame extends Game
 
                 }//for
 
+                //if card found in next player hand all cards with same values passed to current player
                 if (cardFound)
                 {
                     nextPlayer.playCards.removeAll(RemoveList);
@@ -164,6 +171,8 @@ public class goGame extends Game
 
                     currentPlayer.setRight(true);
                 } 
+                
+                 //if no card match in next player hand, curretn player get a card from the deck
                 else if (!cardFound)
                 {
                     currentPlayer.setRight(false);
@@ -194,10 +203,17 @@ public class goGame extends Game
                 
                 }
 
-                currentPlayer.checkSerial();
                 
+                //current player changes one more time check for serials
+                currentPlayer.checkSerial();
+                //if any serial complated current player get 1 point
+                
+                
+                //if current player hand is empty he need to get card from the deck
                 if (currentPlayer.getCardSize() == 0)
                 {
+                    
+                    //if there is no card in the deck game over
                     if (deck.size() != 0)
                     {
                         goCard newCard = deck.getNewCard();
@@ -214,7 +230,7 @@ public class goGame extends Game
         }
     }
 
-    public int getPlayerCard(String name, int min, int max)
+    private int getPlayerCard(String name, int min, int max)
     {
         boolean check = false;
         boolean isnumeric;
@@ -259,7 +275,7 @@ public class goGame extends Game
         return intVal - 1;
     }
 
-    public int getPlayerCount()
+    private int getPlayerCount()
     {
         int intVal = 0;
         final int MIN = 2;
@@ -334,9 +350,9 @@ public class goGame extends Game
     {
 
         System.out.println("\nGame Over");
-        System.out.println("_____________________________________________________");
+        System.out.println("______________________________________________________________________________________");
         System.out.println("Summary");
-        System.out.println("_____________________________________________________");
+        System.out.println("______________________________________________________________________________________");
 
         for (goPlayer i : players)
         {
@@ -350,7 +366,7 @@ public class goGame extends Game
 
         Collections.sort(players);
         
-        System.out.println("_____________________________________________________");
+        System.out.println("______________________________________________________________________________________");
 
         ArrayList<goPlayer> winners = new ArrayList<>();
         
@@ -383,7 +399,7 @@ public class goGame extends Game
            else
             System.out.println("I'm sorry this game finished scorless");
         
-        System.out.println("_____________________________________________________");
+        System.out.println("______________________________________________________________________________________");
 
     }
     
