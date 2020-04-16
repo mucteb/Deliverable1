@@ -7,11 +7,14 @@ import java.util.Scanner;
 public class goGame extends Game
 {
 
-    goDeck deck;
-    int cCount;
-    String spCount;
-    int pCount;
-    boolean gameOver;
+    private goDeck deck;
+    private int cCount;
+    private String spCount;
+    private int pCount;
+    private boolean gameOver;
+    private final int MIN = 2;
+    private final int MAX = 6;
+
 
     public goGame(String name)
     {
@@ -65,8 +68,7 @@ public class goGame extends Game
             //check any serial cards in the current player hand
             currentPlayer.checkSerial();
              //if any serial completed by the current player, the player get 1 point
-
-            
+           
             //set new current player and next player
             do
             {
@@ -74,7 +76,6 @@ public class goGame extends Game
                 {
                     //set previous next player as a current player
                     activePlayerNumber=players.indexOf(nextPlayer);
-                    
                 }
 
 
@@ -275,29 +276,38 @@ public class goGame extends Game
         return intVal - 1;
     }
 
-    private int getPlayerCount()
+    public int getPlayerCount()
     {
-        int intVal = 0;
-        final int MIN = 2;
-        final int MAX = 6;
-
         Scanner k = new Scanner(System.in);
         System.out.print("Please enter how many players want to play (min=" + (MIN)
                 + " max=" + (MAX)
                 + ") 'q' for exit : ");
 
         //check entered value
-        boolean isnumeric = true;
+        spCount = k.nextLine();
+        int a = checkPlayerCount(spCount);
+        System.out.println("Player count is: "+a);        
+        
+        return a;
+        
+        //return checkPlayerCount(spCount);
+    }
+    
+    
+    public int checkPlayerCount(String playerNumber)
+    {
+       int intVal = 0;
+       boolean isnumeric = true;
+ 
         try
         {
-            spCount = k.nextLine();
-            if (spCount.equals("q"))
+            if (playerNumber.equals("q"))
             {
                 return 0;
             }
 
-            intVal = Integer.parseInt(spCount);
-        } catch (Exception e)
+            intVal = Integer.parseInt(playerNumber);
+        } catch (NumberFormatException e)
         {
             isnumeric = false;
         }
@@ -305,30 +315,34 @@ public class goGame extends Game
         if (!((intVal >= MIN) && (intVal <= MAX) && (isnumeric)))
         {
             return 1;
+            
         }
         return intVal;
-    }
+    }        
 
-    public ArrayList<goPlayer> getPlayerNames(int pCount)
+    private ArrayList<goPlayer> getPlayerNames(int pCount)
     {
         ArrayList<goPlayer> tempList = new ArrayList<>();
 
         for (int i = 0; i < pCount; i++)
         {
             int currentPlayerNumber = i + 1;
+            String name = "";
+            do
+            {
             System.out.print("\n Please enter player-"
                     + currentPlayerNumber + " name: ");
-            String name = "";
-
+                
             try
             {
                 Scanner m = new Scanner(System.in);
-
                 name = m.nextLine();
             } catch (Exception e)
             {
                 System.out.println("name error");
             }
+            }while (!checkPlayerName(name));
+
 
             if (pCount > 4)
             {
@@ -343,6 +357,20 @@ public class goGame extends Game
 
         }
         return tempList;
+    }
+    
+    public boolean checkPlayerName(String name)
+    {
+       boolean check = true; 
+       if (name.length()<5) 
+          { 
+            System.out.println("You entered short name please "
+                    + "enter at least 8 character name");
+            check=false;
+          }  
+        
+       return check; 
+        
     }
 
     @Override
