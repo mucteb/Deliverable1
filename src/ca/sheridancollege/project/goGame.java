@@ -331,7 +331,7 @@ public class goGame extends Game
             do
             {
             System.out.print("\n Please enter player-"
-                    + currentPlayerNumber + " name: ");
+                    + currentPlayerNumber + " name(at least 5 character): ");
                 
             try
             {
