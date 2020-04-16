@@ -365,7 +365,7 @@ public class goGame extends Game
        if (name.length()<5) 
           { 
             System.out.println("You entered short name please "
-                    + "enter at least 8 character name");
+                    + "enter at least 5 character name");
             check=false;
           }  
         
