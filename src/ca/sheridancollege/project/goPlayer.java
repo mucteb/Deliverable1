@@ -1,4 +1,9 @@
 package ca.sheridancollege.project;
+/**
+ * @author Muharrem Kaya, 2020
+ * @author Derya Kaya, 2020
+ * @author Mostafa Soroush Zadeh, 2020
+*/
 
 import java.util.ArrayList;
 
