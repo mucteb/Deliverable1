@@ -1,9 +1,10 @@
 package ca.sheridancollege.project;
+
 /**
  * @author Muharrem Kaya, 2020
  * @author Derya Kaya, 2020
  * @author Mostafa Soroush Zadeh, 2020
-*/
+ */
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,12 +21,18 @@ public class goGame extends Game
     private final int MIN = 2;
     private final int MAX = 6;
 
-
+    /**
+     * @param name
+     * @modifier Muharrem, 2020
+     */
     public goGame(String name)
     {
         super(name);
     }
 
+    /**
+     * @modifier Muharrem, 2020
+     */
     @Override
     public void play()
     {
@@ -37,9 +44,8 @@ public class goGame extends Game
 
         do
         {
-            
-         //GetHow many players    
-            
+
+            //GetHow many players    
             pCount = getPlayerCount();
 
             if (pCount == 1)
@@ -55,8 +61,7 @@ public class goGame extends Game
                 check = true;
                 players.addAll(getPlayerNames(pCount));
             }
-            
-            
+
         } while (!check);
 
         if (check)
@@ -68,25 +73,22 @@ public class goGame extends Game
 
             goPlayer currentPlayer = players.get(activePlayerNumber);
             goPlayer nextPlayer = players.get(nextPlayerNumber);
-            
-            
+
             //check any serial cards in the current player hand
             currentPlayer.checkSerial();
-             //if any serial completed by the current player, the player get 1 point
-           
+            //if any serial completed by the current player, the player get 1 point
+
             //set new current player and next player
             do
             {
                 if (!currentPlayer.hasRight())
                 {
                     //set previous next player as a current player
-                    activePlayerNumber=players.indexOf(nextPlayer);
+                    activePlayerNumber = players.indexOf(nextPlayer);
                 }
 
-
                 currentPlayer = players.get(activePlayerNumber);
-                nextPlayer = players.get(getNextPlayer(currentPlayer));   
-               
+                nextPlayer = players.get(getNextPlayer(currentPlayer));
 
                 //Get cards for current player card  
                 System.out.print("\n" + currentPlayer.getPlayerID()
@@ -98,7 +100,6 @@ public class goGame extends Game
                         1,
                         currentPlayer.getCardSize());
 
-                
                 //exit code 100 -program terminated
                 if (choisen == 100)
                 {
@@ -106,10 +107,8 @@ public class goGame extends Game
                     break;
                 }
 
-//
                 //Show players hand
                 goCard choisedCard = currentPlayer.getPlayCards().get(choisen);
-
 
                 System.out.println("\n" + currentPlayer.getPlayerID()
                         + " choised card is: "
@@ -121,7 +120,6 @@ public class goGame extends Game
                 currentPlayer.setRight(false);
                 ArrayList<goCard> RemoveList = new ArrayList<>();
 
-                
                 //compare current players Cards with next player Cards
                 for (goCard nextPlayerCard : nextPlayer.playCards)
                 {
@@ -150,9 +148,6 @@ public class goGame extends Game
                         System.out.println(currentPlayer.getPlayerID()
                                 + "'s new card count is: "
                                 + currentPlayer.playCards.size());
-
-                        
-
                         //      break;
                     } //if
 
@@ -162,23 +157,19 @@ public class goGame extends Game
                 if (cardFound)
                 {
                     nextPlayer.playCards.removeAll(RemoveList);
-                    
+
                     System.out.println(nextPlayer.getPlayerID()
-                                + "'s new card count is: "
-                                + nextPlayer.playCards.size());
-                    
-         
+                            + "'s new card count is: "
+                            + nextPlayer.playCards.size());
+
                     System.out.println(currentPlayer.getPlayerID()
                             + " earned one more time");
 
                     System.out.println("Deck card count is: "
-                                + deck.size());
-                    
+                            + deck.size());
 
                     currentPlayer.setRight(true);
-                } 
-                
-                 //if no card match in next player hand, curretn player get a card from the deck
+                } //if no card match in next player hand, curretn player get a card from the deck
                 else if (!cardFound)
                 {
                     currentPlayer.setRight(false);
@@ -206,19 +197,17 @@ public class goGame extends Game
                     {
                         gameOver = true;
                     }
-                
+
                 }
 
-                
                 //current player changes one more time check for serials
                 currentPlayer.checkSerial();
                 //if any serial complated current player get 1 point
-                
-                
+
                 //if current player hand is empty he need to get card from the deck
                 if (currentPlayer.getCardSize() == 0)
                 {
-                    
+
                     //if there is no card in the deck game over
                     if (deck.size() != 0)
                     {
@@ -236,6 +225,15 @@ public class goGame extends Game
         }
     }
 
+    /**
+     *
+     * @param name
+     * @param min
+     * @param max
+     * @return player Cards
+     * @modifier Muharrem, 2020
+     *
+     */
     private int getPlayerCard(String name, int min, int max)
     {
         boolean check = false;
@@ -281,6 +279,11 @@ public class goGame extends Game
         return intVal - 1;
     }
 
+    /**
+     *
+     * @return Player count
+     * @modifier Muharrem, 2020
+     */
     public int getPlayerCount()
     {
         Scanner k = new Scanner(System.in);
@@ -291,19 +294,23 @@ public class goGame extends Game
         //check entered value
         spCount = k.nextLine();
         int a = checkPlayerCount(spCount);
-        System.out.println("Player count is: "+a);        
-        
+        System.out.println("Player count is: " + a);
+
         return a;
-        
+
         //return checkPlayerCount(spCount);
     }
-    
-    
+
+    /**
+     * @param playerNumber
+     * @return player count
+     * @modifier Muharrem, 2020
+     */
     public int checkPlayerCount(String playerNumber)
     {
-       int intVal = 0;
-       boolean isnumeric = true;
- 
+        int intVal = 0;
+        boolean isnumeric = true;
+
         try
         {
             if (playerNumber.equals("q"))
@@ -320,10 +327,17 @@ public class goGame extends Game
         if (!((intVal >= MIN) && (intVal <= MAX) && (isnumeric)))
         {
             return 1;
-            
+
         }
         return intVal;
-    }        
+    }
+
+    /**
+     *
+     * @param pCount
+     * @return PlayerNames
+     * @modifier Muharrem, 2020
+     */
 
     private ArrayList<goPlayer> getPlayerNames(int pCount)
     {
@@ -335,19 +349,18 @@ public class goGame extends Game
             String name = "";
             do
             {
-            System.out.print("\n Please enter player-"
-                    + currentPlayerNumber + " name(at least 5 character): ");
-                
-            try
-            {
-                Scanner m = new Scanner(System.in);
-                name = m.nextLine();
-            } catch (Exception e)
-            {
-                System.out.println("name error");
-            }
-            }while (!checkPlayerName(name));
+                System.out.print("\n Please enter player-"
+                        + currentPlayerNumber + " name(at least 5 character): ");
 
+                try
+                {
+                    Scanner m = new Scanner(System.in);
+                    name = m.nextLine();
+                } catch (Exception e)
+                {
+                    System.out.println("name error");
+                }
+            } while (!checkPlayerName(name));
 
             if (pCount > 4)
             {
@@ -363,21 +376,30 @@ public class goGame extends Game
         }
         return tempList;
     }
-    
+
+    /**
+     *
+     * @param name
+     * @return player Name
+     * @modifier Muharrem, 2020
+     */
     public boolean checkPlayerName(String name)
     {
-       boolean check = true; 
-       if (name.length()<5) 
-          { 
+        boolean check = true;
+        if (name.length() < 5)
+        {
             System.out.println("You entered short name please "
                     + "enter at least 5 character name");
-            check=false;
-          }  
-        
-       return check; 
-        
+            check = false;
+        }
+
+        return check;
+
     }
 
+    /**
+     * @modifier Muharrem, 2020
+     */
     @Override
     public void declareWinner()
     {
@@ -398,78 +420,92 @@ public class goGame extends Game
         }
 
         Collections.sort(players);
-        
+
         System.out.println("______________________________________________________________________________________");
 
         ArrayList<goPlayer> winners = new ArrayList<>();
-        
-         if (players.get(0).getScore() > 0)
-           {     
+
+        if (players.get(0).getScore() > 0)
+        {
 //            if(players.get(0).getScor() == players.get(1).getScor())
 //            System.out.println("\nWinner is: " + players.get(0).getPlayerID());
-            for (int i=0; i < players.size()-1; i++)
+            for (int i = 0; i < players.size() - 1; i++)
             {
-                if (players.get(i).getScore()==players.get(i+1).getScore())
+                if (players.get(i).getScore() == players.get(i + 1).getScore())
                 {
-                   if (winners.indexOf(players.get(i)) == -1)
-                       winners.add(players.get(i));
-                   if (winners.indexOf(players.get(i+1)) == -1)
-                       winners.add(players.get(i+1));
-                }    
+                    if (winners.indexOf(players.get(i)) == -1)
+                    {
+                        winners.add(players.get(i));
+                    }
+                    if (winners.indexOf(players.get(i + 1)) == -1)
+                    {
+                        winners.add(players.get(i + 1));
+                    }
+                }
             }
-            
-            
-            if (winners.get(0).getScore()>players.get(0).getScore())
+
+            if (winners.get(0).getScore() > players.get(0).getScore())
             {
                 System.out.println("Winners are: ");
-               for (goPlayer i:winners)
-                System.out.print(i.getPlayerID()+", ");
-                System.out.println("");  
-            }     
-            else
-                System.out.println("Champion is : "+players.get(0).getPlayerID()); 
-           }   
-           else
+                for (goPlayer i : winners)
+                {
+                    System.out.print(i.getPlayerID() + ", ");
+                }
+                System.out.println("");
+            } else
+            {
+                System.out.println("Champion is : " + players.get(0).getPlayerID());
+            }
+        } else
+        {
             System.out.println("I'm sorry this game finished scorless");
-        
+        }
+
         System.out.println("______________________________________________________________________________________");
 
     }
-    
+
+    /**
+     *
+     * @param ignoredPlayer
+     * @return next Player
+     */
     private int getNextPlayer(goPlayer ignoredPlayer)
     {
-        boolean check=false;
-        int intVal=0;
+        boolean check = false;
+        int intVal = 0;
         ArrayList<goPlayer> competitors = new ArrayList<>();
-        
-        while(!check)
+
+        while (!check)
         {
-    
-        System.out.print("\n\n");
-        
-        competitors.clear();
-         for (int i = 0; i<players.size(); i++)
-             if (!players.get(i).equals(ignoredPlayer) )
-             {      
-                System.out.print(" ("+i+")-"+players.get(i).getPlayerID());
-                competitors.add(players.get(i));
-             }   
+
+            System.out.print("\n\n");
+
+            competitors.clear();
+            for (int i = 0; i < players.size(); i++)
+            {
+                if (!players.get(i).equals(ignoredPlayer))
+                {
+                    System.out.print(" (" + i + ")-" + players.get(i).getPlayerID());
+                    competitors.add(players.get(i));
+                }
+            }
 
             try
             {
                 Scanner k = new Scanner(System.in);
-                System.out.print("\n"+ignoredPlayer.getPlayerID()+", please choice a competitor: ");
+                System.out.print("\n" + ignoredPlayer.getPlayerID() + ", please choice a competitor: ");
                 String value = k.nextLine();
-                
+
                 intVal = Integer.parseInt(value);
 
             } catch (Exception e)
             {
-                
+
             }
-            
-            if ((players.size()>intVal) && 
-                    (competitors.indexOf(players.get(intVal)) != -1 ))
+
+            if ((players.size() > intVal)
+                    && (competitors.indexOf(players.get(intVal)) != -1))
             {
                 check = true;
             } else
@@ -478,12 +514,10 @@ public class goGame extends Game
             }
 
         }
-        System.out.println(ignoredPlayer.getPlayerID()+" choised "+
-                                 players.get(intVal). getPlayerID()+" as a competitior" );
+        System.out.println(ignoredPlayer.getPlayerID() + " choised "
+                + players.get(intVal).getPlayerID() + " as a competitior");
         return intVal;
-    }        
-    
-    
+    }
 
 }//class end
 

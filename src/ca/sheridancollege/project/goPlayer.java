@@ -1,9 +1,10 @@
 package ca.sheridancollege.project;
+
 /**
  * @author Muharrem Kaya, 2020
  * @author Derya Kaya, 2020
  * @author Mostafa Soroush Zadeh, 2020
-*/
+ */
 
 import java.util.ArrayList;
 
@@ -15,26 +16,51 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
     protected int score;
     protected boolean Right;
 
+    /**
+     *
+     * @return Right
+     * @modifier Muharrem, 2020
+     */
     public boolean hasRight()
     {
         return Right;
     }
 
+    /**
+     *
+     * @param playerRight
+     * @modifier Muharrem, 2020
+     */
     public void setRight(boolean playerRight)
     {
         this.Right = playerRight;
     }
 
+    /**
+     *
+     * @return score
+     * @modifier Muharrem, 2020
+     */
     public int getScore()
     {
         return score;
     }
 
-    public void setScore(int scor)
+    /**
+     *
+     * @param score
+     * @modifier Muharrem, 2020*
+     */
+    public void setScore(int score)
     {
-        this.score += scor;
+        this.score += score;
     }
 
+    /**
+     * @param name
+     * @param pCards
+     * @modifier Muharrem, 2020
+     */
     public goPlayer(String name, ArrayList<goCard> pCards)
     {
         super(name);
@@ -42,11 +68,20 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
         setRight(true);
     }
 
+    /**
+     *
+     * @return playCards.size()
+     * @modifier Muharrem, 2020
+     */
     public int getCardSize()
     {
         return playCards.size();
     }
 
+    /**
+     * @return playCards
+     * @modifier Muharrem, 2020
+     */
     public ArrayList<goCard> getPlayCards()
     {
         return playCards;
@@ -57,6 +92,10 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
         this.playCards = playCards;
     }
 
+    /**
+     * @return card list
+     * @modifier Muharrem, 2020
+     */
     public StringBuilder getCardsList()
     {
         StringBuilder list = new StringBuilder("");
@@ -70,6 +109,9 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
         return list;
     }
 
+    /**
+     * @modifier Muharrem, 2020
+     */
     public void checkSerial()
     {
         ArrayList<Card> serial = new ArrayList<>();
@@ -94,7 +136,9 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
             System.out.println("\n" + getPlayerID()
                     + " completed the serial.");
             for (Card i : serial)
+            {
                 System.out.print(i.toString() + ", ");
+            }
 
             float mscor = (serial.size() / 4);
 
@@ -106,30 +150,40 @@ public final class goPlayer extends Player implements Comparable<goPlayer>
             System.out.println(getPlayerID() + "'s new score is: " + getScore());
 
             getPlayCards().removeAll(serial);
-            
+
         }
 
     }
 
+    /**
+     * @modifier Muharrem, 2020
+     */
     @Override
     public void play()
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * @param o
+     * @return difference
+     * @modifier Muharrem, 2020
+     *
+     */
     @Override
     public int compareTo(goPlayer o)
     {
         return o.getScore() - this.getScore();
     }
 
+    /**
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj)
     {
         return this == obj;
     }
-    
-    
-    
-    
+
 }

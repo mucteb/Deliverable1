@@ -37,6 +37,7 @@ public abstract class Game
     
      /**
      * @return the players of this game
+     * @modifier, Muharrem, 2020 
      */
     public ArrayList <goPlayer> getPlayers() 
     {
@@ -45,6 +46,7 @@ public abstract class Game
 
     /**
      * @param players the players of this game
+     * @modifier, Muharrem, 2020 
      */
     public void setPlayers(ArrayList <goPlayer> players) 
     {
@@ -54,6 +56,7 @@ public abstract class Game
     /**
      * Play the game. This might be one method or many method calls depending
      * on your game.
+     * 
      */
     public abstract void play();
     
